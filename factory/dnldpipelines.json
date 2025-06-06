@@ -1,0 +1,9 @@
+{
+	"name": "dnldpipelines",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "3834aacf-100b-4b79-be73-922bc39ea329",
+		"tenantId": "189de737-c93a-4f5a-8b68-6f4ca9941912"
+	}
+}
