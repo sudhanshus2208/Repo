@@ -1,0 +1,106 @@
+{
+	"name": "insights_logs_apppageviews",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "insights_logs_apppageviews",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"container": "insights-logs-appexceptions"
+			}
+		},
+		"schema": {
+			"type": "object",
+			"properties": {
+				"time": {
+					"type": "string"
+				},
+				"resourceId": {
+					"type": "string"
+				},
+				"ResourceGUID": {
+					"type": "string"
+				},
+				"Type": {
+					"type": "string"
+				},
+				"AppRoleInstance": {
+					"type": "string"
+				},
+				"AppRoleName": {
+					"type": "string"
+				},
+				"ClientCity": {
+					"type": "string"
+				},
+				"ClientCountryOrRegion": {
+					"type": "string"
+				},
+				"ClientIP": {
+					"type": "string"
+				},
+				"ClientStateOrProvince": {
+					"type": "string"
+				},
+				"ClientType": {
+					"type": "string"
+				},
+				"IKey": {
+					"type": "string"
+				},
+				"_BilledSize": {
+					"type": "integer"
+				},
+				"SDKVersion": {
+					"type": "string"
+				},
+				"SessionId": {
+					"type": "string"
+				},
+				"UserId": {
+					"type": "string"
+				},
+				"Properties": {
+					"type": "object",
+					"properties": {
+						"environmentId": {
+							"type": "string"
+						},
+						"LegalEntity": {
+							"type": "string"
+						},
+						"BatchJobId": {
+							"type": "string"
+						},
+						"aadTenantId": {
+							"type": "string"
+						},
+						"ExecutionMode": {
+							"type": "string"
+						},
+						"activityId": {
+							"type": "string"
+						}
+					}
+				},
+				"Name": {
+					"type": "string"
+				},
+				"DurationMs": {
+					"type": "number"
+				},
+				"PerformanceBucket": {
+					"type": "string"
+				},
+				"ItemCount": {
+					"type": "integer"
+				}
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

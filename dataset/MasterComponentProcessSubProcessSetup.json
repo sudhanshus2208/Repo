@@ -1,0 +1,34 @@
+{
+	"name": "MasterComponentProcessSubProcessSetup",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "Component",
+				"type": "nvarchar"
+			},
+			{
+				"name": "BatchJobCaption",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Process",
+				"type": "nvarchar"
+			},
+			{
+				"name": "SubProcess",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "MasterComponentProcessSubProcessSetup"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

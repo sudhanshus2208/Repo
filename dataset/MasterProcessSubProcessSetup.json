@@ -1,0 +1,32 @@
+{
+	"name": "MasterProcessSubProcessSetup",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "MasterProcessSubProcess",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"container": "master-process-subprocess-setup"
+			}
+		},
+		"schema": {
+			"type": "object",
+			"properties": {
+				"Process": {
+					"type": "string"
+				},
+				"Subprocess": {
+					"type": "string"
+				},
+				"BatchJobCaption": {
+					"type": "string"
+				}
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,410 @@
+{
+	"name": "BLOB_To_SQL",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "JsonSource",
+						"additionalColumns": [
+							{
+								"name": "FileName",
+								"value": "$$FILEPATH"
+							}
+						],
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"wildcardFolderPath": "*",
+							"wildcardFileName": "*.json",
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "JsonReadSettings"
+						}
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"path": "$['time']"
+								},
+								"sink": {
+									"name": "time",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['resourceId']"
+								},
+								"sink": {
+									"name": "resourceId",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['ResourceGUID']"
+								},
+								"sink": {
+									"name": "ResourceGUID",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Type']"
+								},
+								"sink": {
+									"name": "TypeAA",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['AppRoleInstance']"
+								},
+								"sink": {
+									"name": "AppRoleInstance",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['AppRoleName']"
+								},
+								"sink": {
+									"name": "AppRoleName",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['ClientCity']"
+								},
+								"sink": {
+									"name": "ClientCity",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['ClientCountryOrRegion']"
+								},
+								"sink": {
+									"name": "ClientCountryOrRegion",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['ClientIP']"
+								},
+								"sink": {
+									"name": "ClientIP",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['ClientStateOrProvince']"
+								},
+								"sink": {
+									"name": "ClientStateOrProvince",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['ClientType']"
+								},
+								"sink": {
+									"name": "ClientType",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['IKey']"
+								},
+								"sink": {
+									"name": "IKey",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['_BilledSize']"
+								},
+								"sink": {
+									"name": "_BilledSize",
+									"type": "Single"
+								}
+							},
+							{
+								"source": {
+									"path": "$['SDKVersion']"
+								},
+								"sink": {
+									"name": "SDKVersion",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['SessionId']"
+								},
+								"sink": {
+									"name": "SessionId",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['UserId']"
+								},
+								"sink": {
+									"name": "UserId",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Properties']['environmentId']"
+								},
+								"sink": {
+									"name": "environmentId",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Properties']['MethodName']"
+								},
+								"sink": {
+									"name": "MethodName",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Properties']['LegalEntity']"
+								},
+								"sink": {
+									"name": "LegalEntity",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Properties']['CallStack']"
+								},
+								"sink": {
+									"name": "CallStack",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Properties']['BatchJobId']"
+								},
+								"sink": {
+									"name": "BatchJobId",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Properties']['BatchJobCaption']"
+								},
+								"sink": {
+									"name": "BatchJobCaption",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Properties']['ClassName']"
+								},
+								"sink": {
+									"name": "ClassName",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Properties']['aadTenantId']"
+								},
+								"sink": {
+									"name": "aadTenantId",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Properties']['ExecutionMode']"
+								},
+								"sink": {
+									"name": "ExecutionMode",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Properties']['activityId']"
+								},
+								"sink": {
+									"name": "activityId",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Details'][0]['outerId']"
+								},
+								"sink": {
+									"name": "outerId",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Details'][0]['message']"
+								},
+								"sink": {
+									"name": "message",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Details'][0]['type']"
+								},
+								"sink": {
+									"name": "type",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Details'][0]['id']"
+								},
+								"sink": {
+									"name": "id",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['ProblemId']"
+								},
+								"sink": {
+									"name": "ProblemId",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['ExceptionType']"
+								},
+								"sink": {
+									"name": "ExceptionType",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Assembly']"
+								},
+								"sink": {
+									"name": "Assembly",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Method']"
+								},
+								"sink": {
+									"name": "Method",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['OuterType']"
+								},
+								"sink": {
+									"name": "OuterType",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['OuterMessage']"
+								},
+								"sink": {
+									"name": "OuterMessage",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['ItemCount']"
+								},
+								"sink": {
+									"name": "ItemCount",
+									"type": "Single"
+								}
+							},
+							{
+								"source": {
+									"path": "$['FileName']"
+								},
+								"sink": {
+									"name": "FileName",
+									"type": "String"
+								}
+							}
+						],
+						"collectionReference": ""
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "insights_logs_apppageviews",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "outputJSON",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2025-03-06T03:32:08Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

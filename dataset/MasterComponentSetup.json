@@ -1,0 +1,29 @@
+{
+	"name": "MasterComponentSetup",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "MasterComponentSetup",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"container": "master-component-setup"
+			}
+		},
+		"schema": {
+			"type": "object",
+			"properties": {
+				"Component": {
+					"type": "string"
+				},
+				"BatchJobCaption": {
+					"type": "string"
+				}
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

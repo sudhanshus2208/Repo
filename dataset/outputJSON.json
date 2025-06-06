@@ -1,0 +1,22 @@
+{
+	"name": "outputJSON",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "AA",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "outputJSON"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

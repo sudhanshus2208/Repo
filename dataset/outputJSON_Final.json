@@ -1,0 +1,184 @@
+{
+	"name": "outputJSON_Final",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "time",
+				"type": "nvarchar"
+			},
+			{
+				"name": "resourceId",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ResourceGUID",
+				"type": "nvarchar"
+			},
+			{
+				"name": "TypeAA",
+				"type": "nvarchar"
+			},
+			{
+				"name": "AppRoleInstance",
+				"type": "nvarchar"
+			},
+			{
+				"name": "AppRoleName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ClientCity",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ClientCountryOrRegion",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ClientIP",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ClientStateOrProvince",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ClientType",
+				"type": "nvarchar"
+			},
+			{
+				"name": "IKey",
+				"type": "nvarchar"
+			},
+			{
+				"name": "_BilledSize",
+				"type": "real",
+				"precision": 7
+			},
+			{
+				"name": "SDKVersion",
+				"type": "nvarchar"
+			},
+			{
+				"name": "SessionId",
+				"type": "nvarchar"
+			},
+			{
+				"name": "UserId",
+				"type": "nvarchar"
+			},
+			{
+				"name": "environmentId",
+				"type": "nvarchar"
+			},
+			{
+				"name": "MethodName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "LegalEntity",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CallStack",
+				"type": "nvarchar"
+			},
+			{
+				"name": "BatchJobId",
+				"type": "nvarchar"
+			},
+			{
+				"name": "BatchJobCaption",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ClassName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "aadTenantId",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ExecutionMode",
+				"type": "nvarchar"
+			},
+			{
+				"name": "activityId",
+				"type": "nvarchar"
+			},
+			{
+				"name": "outerId",
+				"type": "nvarchar"
+			},
+			{
+				"name": "message",
+				"type": "nvarchar"
+			},
+			{
+				"name": "type",
+				"type": "nvarchar"
+			},
+			{
+				"name": "id",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ProblemId",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ExceptionType",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Assembly",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Method",
+				"type": "nvarchar"
+			},
+			{
+				"name": "OuterType",
+				"type": "nvarchar"
+			},
+			{
+				"name": "OuterMessage",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ItemCount",
+				"type": "real",
+				"precision": 7
+			},
+			{
+				"name": "FileName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Process",
+				"type": "nvarchar"
+			},
+			{
+				"name": "SubProcess",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ComponentName",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "outputJSON_Final"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

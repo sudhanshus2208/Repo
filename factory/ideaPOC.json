@@ -1,0 +1,9 @@
+{
+	"name": "ideaPOC",
+	"location": "centralindia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "32df9149-9558-425a-868b-752a6d2b8010",
+		"tenantId": "189de737-c93a-4f5a-8b68-6f4ca9941912"
+	}
+}
