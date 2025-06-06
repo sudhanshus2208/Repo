@@ -1,0 +1,1505 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "ideaPOC"
+		},
+		"AzureBlobStorage1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage1'"
+		},
+		"AzureBlobStorage2_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage2'"
+		},
+		"AzureBlobStorage3_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage3'"
+		},
+		"AzureSqlDatabase_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'AzureSqlDatabase'"
+		},
+		"MasterComponentSetup_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'MasterComponentSetup'"
+		},
+		"MasterProcessSubProcess_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'MasterProcessSubProcess'"
+		},
+		"fileworkareaJSON_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'fileworkareaJSON'"
+		},
+		"insights_logs_apppageviews_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'insights_logs_apppageviews'"
+		},
+		"AzureSqlDatabase_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "db2702.database.windows.net"
+		},
+		"AzureSqlDatabase_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "db2702"
+		},
+		"AzureSqlDatabase_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "admin2702"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/WAIT')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Wait1",
+						"type": "Wait",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"waitTimeInSeconds": 1
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureBlobStorage1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureBlobStorage1_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureBlobStorage2')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureBlobStorage2_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureBlobStorage3')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureBlobStorage3_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlDatabase')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"server": "[parameters('AzureSqlDatabase_properties_typeProperties_server')]",
+					"database": "[parameters('AzureSqlDatabase_properties_typeProperties_database')]",
+					"encrypt": "optional",
+					"trustServerCertificate": false,
+					"authenticationType": "SQL",
+					"userName": "[parameters('AzureSqlDatabase_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('AzureSqlDatabase_password')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/MasterComponentSetup')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('MasterComponentSetup_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/MasterProcessSubProcess')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('MasterProcessSubProcess_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/fileworkareaJSON')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('fileworkareaJSON_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/insights_logs_apppageviews')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('insights_logs_apppageviews_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/MasterComponentProcessSubProcessSetup')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Component",
+						"type": "nvarchar"
+					},
+					{
+						"name": "BatchJobCaption",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Process",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SubProcess",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "MasterComponentProcessSubProcessSetup"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/MasterComponentSetup')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "MasterComponentSetup",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"container": "master-component-setup"
+					}
+				},
+				"schema": {
+					"type": "object",
+					"properties": {
+						"Component": {
+							"type": "string"
+						},
+						"BatchJobCaption": {
+							"type": "string"
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/MasterComponentSetup')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/MasterProcessSubProcessSetup')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "MasterProcessSubProcess",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"container": "master-process-subprocess-setup"
+					}
+				},
+				"schema": {
+					"type": "object",
+					"properties": {
+						"Process": {
+							"type": "string"
+						},
+						"Subprocess": {
+							"type": "string"
+						},
+						"BatchJobCaption": {
+							"type": "string"
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/MasterProcessSubProcess')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ProcessedFiles')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage3",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"container": "processedfiles"
+					}
+				},
+				"schema": {}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage3')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/insights_logs_apppageviews')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "insights_logs_apppageviews",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"container": "insights-logs-appexceptions"
+					}
+				},
+				"schema": {
+					"type": "object",
+					"properties": {
+						"time": {
+							"type": "string"
+						},
+						"resourceId": {
+							"type": "string"
+						},
+						"ResourceGUID": {
+							"type": "string"
+						},
+						"Type": {
+							"type": "string"
+						},
+						"AppRoleInstance": {
+							"type": "string"
+						},
+						"AppRoleName": {
+							"type": "string"
+						},
+						"ClientCity": {
+							"type": "string"
+						},
+						"ClientCountryOrRegion": {
+							"type": "string"
+						},
+						"ClientIP": {
+							"type": "string"
+						},
+						"ClientStateOrProvince": {
+							"type": "string"
+						},
+						"ClientType": {
+							"type": "string"
+						},
+						"IKey": {
+							"type": "string"
+						},
+						"_BilledSize": {
+							"type": "integer"
+						},
+						"SDKVersion": {
+							"type": "string"
+						},
+						"SessionId": {
+							"type": "string"
+						},
+						"UserId": {
+							"type": "string"
+						},
+						"Properties": {
+							"type": "object",
+							"properties": {
+								"environmentId": {
+									"type": "string"
+								},
+								"LegalEntity": {
+									"type": "string"
+								},
+								"BatchJobId": {
+									"type": "string"
+								},
+								"aadTenantId": {
+									"type": "string"
+								},
+								"ExecutionMode": {
+									"type": "string"
+								},
+								"activityId": {
+									"type": "string"
+								}
+							}
+						},
+						"Name": {
+							"type": "string"
+						},
+						"DurationMs": {
+							"type": "number"
+						},
+						"PerformanceBucket": {
+							"type": "string"
+						},
+						"ItemCount": {
+							"type": "integer"
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/insights_logs_apppageviews')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/outputJSON')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "AA",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "outputJSON"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/outputJSON_Final')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "time",
+						"type": "nvarchar"
+					},
+					{
+						"name": "resourceId",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ResourceGUID",
+						"type": "nvarchar"
+					},
+					{
+						"name": "TypeAA",
+						"type": "nvarchar"
+					},
+					{
+						"name": "AppRoleInstance",
+						"type": "nvarchar"
+					},
+					{
+						"name": "AppRoleName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ClientCity",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ClientCountryOrRegion",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ClientIP",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ClientStateOrProvince",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ClientType",
+						"type": "nvarchar"
+					},
+					{
+						"name": "IKey",
+						"type": "nvarchar"
+					},
+					{
+						"name": "_BilledSize",
+						"type": "real",
+						"precision": 7
+					},
+					{
+						"name": "SDKVersion",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SessionId",
+						"type": "nvarchar"
+					},
+					{
+						"name": "UserId",
+						"type": "nvarchar"
+					},
+					{
+						"name": "environmentId",
+						"type": "nvarchar"
+					},
+					{
+						"name": "MethodName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "LegalEntity",
+						"type": "nvarchar"
+					},
+					{
+						"name": "CallStack",
+						"type": "nvarchar"
+					},
+					{
+						"name": "BatchJobId",
+						"type": "nvarchar"
+					},
+					{
+						"name": "BatchJobCaption",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ClassName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "aadTenantId",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ExecutionMode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "activityId",
+						"type": "nvarchar"
+					},
+					{
+						"name": "outerId",
+						"type": "nvarchar"
+					},
+					{
+						"name": "message",
+						"type": "nvarchar"
+					},
+					{
+						"name": "type",
+						"type": "nvarchar"
+					},
+					{
+						"name": "id",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ProblemId",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ExceptionType",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Assembly",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Method",
+						"type": "nvarchar"
+					},
+					{
+						"name": "OuterType",
+						"type": "nvarchar"
+					},
+					{
+						"name": "OuterMessage",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ItemCount",
+						"type": "real",
+						"precision": 7
+					},
+					{
+						"name": "FileName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Process",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SubProcess",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ComponentName",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "outputJSON_Final"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ArchiveFiles and Delete')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy data2",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "JsonSource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"wildcardFolderPath": "*",
+									"wildcardFileName": "*.json",
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "JsonReadSettings"
+								}
+							},
+							"sink": {
+								"type": "JsonSink",
+								"storeSettings": {
+									"type": "AzureBlobStorageWriteSettings",
+									"copyBehavior": "PreserveHierarchy"
+								},
+								"formatSettings": {
+									"type": "JsonWriteSettings"
+								}
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "insights_logs_apppageviews",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ProcessedFiles",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Delete1",
+						"type": "Delete",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
+						"dependsOn": [
+							{
+								"activity": "Copy data2",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataset": {
+								"referenceName": "insights_logs_apppageviews",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"enableLogging": false,
+							"storeSettings": {
+								"type": "AzureBlobStorageReadSettings",
+								"recursive": true,
+								"enablePartitionDiscovery": false
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": [],
+				"lastPublishTime": "2025-03-05T15:44:02Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/insights_logs_apppageviews')]",
+				"[concat(variables('factoryId'), '/datasets/ProcessedFiles')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/BLOB_To_SQL')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy data1",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "JsonSource",
+								"additionalColumns": [
+									{
+										"name": "FileName",
+										"value": "$$FILEPATH"
+									}
+								],
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"wildcardFolderPath": "*",
+									"wildcardFileName": "*.json",
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "JsonReadSettings"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"path": "$['time']"
+										},
+										"sink": {
+											"name": "time",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['resourceId']"
+										},
+										"sink": {
+											"name": "resourceId",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['ResourceGUID']"
+										},
+										"sink": {
+											"name": "ResourceGUID",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Type']"
+										},
+										"sink": {
+											"name": "TypeAA",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['AppRoleInstance']"
+										},
+										"sink": {
+											"name": "AppRoleInstance",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['AppRoleName']"
+										},
+										"sink": {
+											"name": "AppRoleName",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['ClientCity']"
+										},
+										"sink": {
+											"name": "ClientCity",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['ClientCountryOrRegion']"
+										},
+										"sink": {
+											"name": "ClientCountryOrRegion",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['ClientIP']"
+										},
+										"sink": {
+											"name": "ClientIP",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['ClientStateOrProvince']"
+										},
+										"sink": {
+											"name": "ClientStateOrProvince",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['ClientType']"
+										},
+										"sink": {
+											"name": "ClientType",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['IKey']"
+										},
+										"sink": {
+											"name": "IKey",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['_BilledSize']"
+										},
+										"sink": {
+											"name": "_BilledSize",
+											"type": "Single"
+										}
+									},
+									{
+										"source": {
+											"path": "$['SDKVersion']"
+										},
+										"sink": {
+											"name": "SDKVersion",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['SessionId']"
+										},
+										"sink": {
+											"name": "SessionId",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['UserId']"
+										},
+										"sink": {
+											"name": "UserId",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Properties']['environmentId']"
+										},
+										"sink": {
+											"name": "environmentId",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Properties']['MethodName']"
+										},
+										"sink": {
+											"name": "MethodName",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Properties']['LegalEntity']"
+										},
+										"sink": {
+											"name": "LegalEntity",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Properties']['CallStack']"
+										},
+										"sink": {
+											"name": "CallStack",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Properties']['BatchJobId']"
+										},
+										"sink": {
+											"name": "BatchJobId",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Properties']['BatchJobCaption']"
+										},
+										"sink": {
+											"name": "BatchJobCaption",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Properties']['ClassName']"
+										},
+										"sink": {
+											"name": "ClassName",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Properties']['aadTenantId']"
+										},
+										"sink": {
+											"name": "aadTenantId",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Properties']['ExecutionMode']"
+										},
+										"sink": {
+											"name": "ExecutionMode",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Properties']['activityId']"
+										},
+										"sink": {
+											"name": "activityId",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Details'][0]['outerId']"
+										},
+										"sink": {
+											"name": "outerId",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Details'][0]['message']"
+										},
+										"sink": {
+											"name": "message",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Details'][0]['type']"
+										},
+										"sink": {
+											"name": "type",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Details'][0]['id']"
+										},
+										"sink": {
+											"name": "id",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['ProblemId']"
+										},
+										"sink": {
+											"name": "ProblemId",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['ExceptionType']"
+										},
+										"sink": {
+											"name": "ExceptionType",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Assembly']"
+										},
+										"sink": {
+											"name": "Assembly",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Method']"
+										},
+										"sink": {
+											"name": "Method",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['OuterType']"
+										},
+										"sink": {
+											"name": "OuterType",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['OuterMessage']"
+										},
+										"sink": {
+											"name": "OuterMessage",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['ItemCount']"
+										},
+										"sink": {
+											"name": "ItemCount",
+											"type": "Single"
+										}
+									},
+									{
+										"source": {
+											"path": "$['FileName']"
+										},
+										"sink": {
+											"name": "FileName",
+											"type": "String"
+										}
+									}
+								],
+								"collectionReference": ""
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "insights_logs_apppageviews",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "outputJSON",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": [],
+				"lastPublishTime": "2025-03-06T03:32:08Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/insights_logs_apppageviews')]",
+				"[concat(variables('factoryId'), '/datasets/outputJSON')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/MasterComponentProcessSubProcessSetup')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Script1",
+						"type": "Script",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase",
+							"type": "LinkedServiceReference"
+						},
+						"typeProperties": {
+							"scripts": [
+								{
+									"type": "Query",
+									"text": "drop table MasterComponentProcessSubProcessSetup;\r\n\r\nCREATE TABLE [dbo].[MasterComponentProcessSubProcessSetup](\r\n\t[Component] [nvarchar](max) NULL,\t\r\n\t[BatchJobCaption] [nvarchar](max) NULL,\r\n\t[Process] [nvarchar](max) NULL,\r\n\t[SubProcess] [nvarchar](max) NULL,\r\n) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]"
+								}
+							],
+							"scriptBlockExecutionTimeout": "02:00:00"
+						}
+					},
+					{
+						"name": "Copy data1",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Script1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "JsonSource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"wildcardFileName": "*.json",
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "JsonReadSettings"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "upsert",
+								"upsertSettings": {
+									"useTempDB": true,
+									"keys": [
+										"BatchJobCaption"
+									]
+								},
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"path": "$['Component']"
+										},
+										"sink": {
+											"name": "Component",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['BatchJobCaption']"
+										},
+										"sink": {
+											"name": "BatchJobCaption",
+											"type": "String"
+										}
+									}
+								]
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "MasterComponentSetup",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "MasterComponentProcessSubProcessSetup",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Copy data2",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Copy data1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "JsonSource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"wildcardFileName": "*.json",
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "JsonReadSettings"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "upsert",
+								"upsertSettings": {
+									"useTempDB": true,
+									"keys": [
+										"BatchJobCaption"
+									]
+								},
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"path": "$['Process']"
+										},
+										"sink": {
+											"name": "Process",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Subprocess']"
+										},
+										"sink": {
+											"name": "SubProcess",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['BatchJobCaption']"
+										},
+										"sink": {
+											"name": "BatchJobCaption",
+											"type": "String"
+										}
+									}
+								]
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "MasterProcessSubProcessSetup",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "MasterComponentProcessSubProcessSetup",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": [],
+				"lastPublishTime": "2025-03-06T03:10:30Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase')]",
+				"[concat(variables('factoryId'), '/datasets/MasterComponentSetup')]",
+				"[concat(variables('factoryId'), '/datasets/MasterComponentProcessSubProcessSetup')]",
+				"[concat(variables('factoryId'), '/datasets/MasterProcessSubProcessSetup')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/readJSON')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy data2",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "JsonSource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"wildcardFolderPath": "*",
+									"wildcardFileName": "*.json",
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "JsonReadSettings"
+								}
+							},
+							"sink": {
+								"type": "JsonSink",
+								"storeSettings": {
+									"type": "AzureBlobStorageWriteSettings",
+									"copyBehavior": "FlattenHierarchy"
+								},
+								"formatSettings": {
+									"type": "JsonWriteSettings"
+								}
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "insights_logs_apppageviews",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ProcessedFiles",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Delete1",
+						"type": "Delete",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
+						"dependsOn": [
+							{
+								"activity": "Copy data2",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataset": {
+								"referenceName": "insights_logs_apppageviews",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"enableLogging": false,
+							"storeSettings": {
+								"type": "AzureBlobStorageReadSettings",
+								"recursive": true,
+								"enablePartitionDiscovery": false
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": [],
+				"lastPublishTime": "2025-03-06T03:32:08Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/insights_logs_apppageviews')]",
+				"[concat(variables('factoryId'), '/datasets/ProcessedFiles')]"
+			]
+		}
+	]
+}

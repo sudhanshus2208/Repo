@@ -1,0 +1,369 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "ideaPOC"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/dataflow1')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "outputJSON",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						},
+						{
+							"dataset": {
+								"referenceName": "MasterComponentProcessSubProcessSetup",
+								"type": "DatasetReference"
+							},
+							"name": "source2"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "outputJSON_Final",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "join1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          time as string,",
+						"          resourceId as string,",
+						"          ResourceGUID as string,",
+						"          TypeAA as string,",
+						"          AppRoleInstance as string,",
+						"          AppRoleName as string,",
+						"          ClientCity as string,",
+						"          ClientCountryOrRegion as string,",
+						"          ClientIP as string,",
+						"          ClientStateOrProvince as string,",
+						"          ClientType as string,",
+						"          IKey as string,",
+						"          {_BilledSize} as float,",
+						"          SDKVersion as string,",
+						"          SessionId as string,",
+						"          UserId as string,",
+						"          environmentId as string,",
+						"          MethodName as string,",
+						"          LegalEntity as string,",
+						"          CallStack as string,",
+						"          BatchJobId as string,",
+						"          BatchJobCaption as string,",
+						"          ClassName as string,",
+						"          aadTenantId as string,",
+						"          ExecutionMode as string,",
+						"          activityId as string,",
+						"          outerId as string,",
+						"          message as string,",
+						"          type as string,",
+						"          id as string,",
+						"          ProblemId as string,",
+						"          ExceptionType as string,",
+						"          Assembly as string,",
+						"          Method as string,",
+						"          OuterType as string,",
+						"          OuterMessage as string,",
+						"          ItemCount as float,",
+						"          FileName as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> source1",
+						"source(output(",
+						"          Component as string,",
+						"          BatchJobCaption as string,",
+						"          Process as string,",
+						"          SubProcess as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     inferDriftedColumnTypes: true,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> source2",
+						"source1, source2 join(source1@BatchJobCaption == source2@BatchJobCaption,",
+						"     joinType:'left',",
+						"     matchType:'exact',",
+						"     ignoreSpaces: false,",
+						"     broadcast: 'auto')~> join1",
+						"join1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          time as string,",
+						"          resourceId as string,",
+						"          ResourceGUID as string,",
+						"          TypeAA as string,",
+						"          AppRoleInstance as string,",
+						"          AppRoleName as string,",
+						"          ClientCity as string,",
+						"          ClientCountryOrRegion as string,",
+						"          ClientIP as string,",
+						"          ClientStateOrProvince as string,",
+						"          ClientType as string,",
+						"          IKey as string,",
+						"          {_BilledSize} as float,",
+						"          SDKVersion as string,",
+						"          SessionId as string,",
+						"          UserId as string,",
+						"          environmentId as string,",
+						"          MethodName as string,",
+						"          LegalEntity as string,",
+						"          CallStack as string,",
+						"          BatchJobId as string,",
+						"          BatchJobCaption as string,",
+						"          ClassName as string,",
+						"          aadTenantId as string,",
+						"          ExecutionMode as string,",
+						"          activityId as string,",
+						"          outerId as string,",
+						"          message as string,",
+						"          type as string,",
+						"          id as string,",
+						"          ProblemId as string,",
+						"          ExceptionType as string,",
+						"          Assembly as string,",
+						"          Method as string,",
+						"          OuterType as string,",
+						"          OuterMessage as string,",
+						"          ItemCount as float,",
+						"          FileName as string,",
+						"          Process as string,",
+						"          SubProcess as string,",
+						"          ComponentName as string",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError',",
+						"     mapColumn(",
+						"          time,",
+						"          resourceId,",
+						"          ResourceGUID,",
+						"          TypeAA,",
+						"          AppRoleInstance,",
+						"          AppRoleName,",
+						"          ClientCity,",
+						"          ClientCountryOrRegion,",
+						"          ClientIP,",
+						"          ClientStateOrProvince,",
+						"          ClientType,",
+						"          IKey,",
+						"          {_BilledSize},",
+						"          SDKVersion,",
+						"          SessionId,",
+						"          UserId,",
+						"          environmentId,",
+						"          MethodName,",
+						"          LegalEntity,",
+						"          CallStack,",
+						"          BatchJobId,",
+						"          ClassName,",
+						"          aadTenantId,",
+						"          ExecutionMode,",
+						"          activityId,",
+						"          outerId,",
+						"          message,",
+						"          type,",
+						"          id,",
+						"          ProblemId,",
+						"          ExceptionType,",
+						"          Assembly,",
+						"          Method,",
+						"          OuterType,",
+						"          OuterMessage,",
+						"          ItemCount,",
+						"          FileName,",
+						"          Process,",
+						"          SubProcess,",
+						"          ComponentName = Component,",
+						"          BatchJobCaption = source1@BatchJobCaption",
+						"     )) ~> sink1"
+					]
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/rawJSONtoSQL')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Data flow1",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "dataflow1",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"source1": {},
+									"source2": {},
+									"sink1": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": [],
+				"lastPublishTime": "2025-03-06T03:17:24Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/dataflow1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/readJSON_withfilename')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Take latest Master component Process SubProcess",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"policy": {
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "MasterComponentProcessSubProcessSetup",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "Blob To SQL",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "Take latest Master component Process SubProcess",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "BLOB_To_SQL",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "Execute Pipeline1",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "Blob To SQL",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "rawJSONtoSQL",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "Execute Pipeline2",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "Execute Pipeline1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "ArchiveFiles and Delete",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": [],
+				"lastPublishTime": "2025-03-06T03:17:24Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/rawJSONtoSQL')]"
+			]
+		}
+	]
+}
